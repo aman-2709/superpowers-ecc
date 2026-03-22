@@ -27,7 +27,7 @@ Start with `/superpowers-ecc:brainstorm` to kick off a new feature or project. T
 | Standalone agents | 7 | Domain consultants (planner, architect, etc.) |
 | Slash commands | 24 | Workflow, quality, security, learning, orchestration |
 | Rule sets | 4 | common + typescript + python + golang |
-| Session persistence | -- | Checkpoint/restore with learning system |
+| Learning system | 6 commands | Instincts, confidence scoring, cross-session memory |
 | Cross-platform | 4 | Claude Code, Cursor, OpenCode, Codex CLI |
 
 ## Workflow Overview
@@ -38,7 +38,7 @@ The plugin enforces a 7-step development loop:
 brainstorm -> worktree -> plan -> implement (subagent-driven) -> review -> verify -> merge
 ```
 
-Each step has a dedicated skill with guardrails. Start with `/brainstorm` to enter the loop.
+Each step has a dedicated skill with guardrails. Start with `/superpowers-ecc:brainstorm` to enter the loop.
 
 ## Two-Layer Agent Architecture
 
@@ -47,7 +47,7 @@ Each step has a dedicated skill with guardrails. Start with `/brainstorm` to ent
 | Embedded subagent prompts | Execution machinery | implementer, spec-reviewer, quality-reviewer |
 | Standalone agents | Domain consultants | planner, architect, security-reviewer, build-error-resolver |
 
-Embedded prompts are invoked automatically during `/execute-plan`. Standalone agents are called on-demand via their slash commands or by other skills that need specialist input.
+Embedded prompts are invoked automatically during `/superpowers-ecc:execute-plan`. Standalone agents are called on-demand via their slash commands or by other skills that need specialist input.
 
 ## Learning System
 
@@ -57,12 +57,12 @@ The continuous learning system observes patterns across sessions and codifies th
 
 | Command | Purpose |
 |---------|---------|
-| `/learn` | Record an observation or pattern |
-| `/learn-eval` | Evaluate and score recorded instincts |
-| `/evolve` | Promote high-confidence instincts to skills |
-| `/instinct-status` | Show current instincts and their confidence scores |
-| `/instinct-import` | Import instincts from a file |
-| `/instinct-export` | Export instincts to a file |
+| `/superpowers-ecc:learn` | Record an observation or pattern |
+| `/superpowers-ecc:learn-eval` | Evaluate and score recorded instincts |
+| `/superpowers-ecc:evolve` | Promote high-confidence instincts to skills |
+| `/superpowers-ecc:instinct-status` | Show current instincts and their confidence scores |
+| `/superpowers-ecc:instinct-import` | Import instincts from a file |
+| `/superpowers-ecc:instinct-export` | Export instincts to a file |
 
 ## Commands Reference
 
@@ -70,65 +70,65 @@ The continuous learning system observes patterns across sessions and codifies th
 
 | Command | Description |
 |---------|-------------|
-| `/brainstorm` | Structured ideation with spec document output |
-| `/write-plan` | Generate an implementation plan from a spec |
-| `/execute-plan` | Run a plan via subagent-driven implementation |
-| `/plan` | Alias for `/write-plan` — shorter name, same behavior |
+| `/superpowers-ecc:brainstorm` | Structured ideation with spec document output |
+| `/superpowers-ecc:write-plan` | Generate an implementation plan from a spec |
+| `/superpowers-ecc:execute-plan` | Run a plan via subagent-driven implementation |
+| `/superpowers-ecc:plan` | Alias for `/superpowers-ecc:write-plan` — shorter name, same behavior |
 
 ### Quality
 
 | Command | Description |
 |---------|-------------|
-| `/tdd` | Test-driven development cycle |
-| `/code-review` | Request a code review |
-| `/verify` | Run verification checks before completion |
-| `/quality-gate` | Enforce quality standards on changes |
-| `/test-coverage` | Analyze and report test coverage |
+| `/superpowers-ecc:tdd` | Test-driven development cycle |
+| `/superpowers-ecc:code-review` | Request a code review |
+| `/superpowers-ecc:verify` | Run verification checks before completion |
+| `/superpowers-ecc:quality-gate` | Enforce quality standards on changes |
+| `/superpowers-ecc:test-coverage` | Analyze and report test coverage |
 
 ### Security
 
 | Command | Description |
 |---------|-------------|
-| `/security-scan` | Run security review on code changes |
+| `/superpowers-ecc:security-scan` | Run security review on code changes |
 
 ### Agents
 
 | Command | Description |
 |---------|-------------|
-| `/build-fix` | Invoke build-error-resolver agent |
-| `/refactor-clean` | Invoke refactor-cleaner agent |
-| `/e2e` | Invoke e2e-runner agent |
+| `/superpowers-ecc:build-fix` | Invoke build-error-resolver agent |
+| `/superpowers-ecc:refactor-clean` | Invoke refactor-cleaner agent |
+| `/superpowers-ecc:e2e` | Invoke e2e-runner agent |
 
 ### Learning
 
 | Command | Description |
 |---------|-------------|
-| `/learn` | Record a pattern or observation |
-| `/learn-eval` | Evaluate instinct confidence |
-| `/evolve` | Promote instincts to skills |
-| `/instinct-status` | Show instinct scores |
-| `/instinct-import` | Import instincts |
-| `/instinct-export` | Export instincts |
+| `/superpowers-ecc:learn` | Record a pattern or observation |
+| `/superpowers-ecc:learn-eval` | Evaluate instinct confidence |
+| `/superpowers-ecc:evolve` | Promote instincts to skills |
+| `/superpowers-ecc:instinct-status` | Show instinct scores |
+| `/superpowers-ecc:instinct-import` | Import instincts |
+| `/superpowers-ecc:instinct-export` | Export instincts |
 
 ### Orchestration
 
 | Command | Description |
 |---------|-------------|
-| `/multi-plan` | Plan across multiple worktrees |
-| `/multi-execute` | Execute across multiple worktrees |
+| `/superpowers-ecc:multi-plan` | Plan across multiple worktrees |
+| `/superpowers-ecc:multi-execute` | Execute across multiple worktrees |
 
 ### Session
 
 | Command | Description |
 |---------|-------------|
-| `/sessions` | List and manage sessions |
-| `/checkpoint` | Save session state for later restore |
+| `/superpowers-ecc:sessions` | List and manage sessions |
+| `/superpowers-ecc:checkpoint` | Save session state for later restore |
 
 ### Optimization
 
 | Command | Description |
 |---------|-------------|
-| `/model-route` | Route tasks to appropriate model tiers |
+| `/superpowers-ecc:model-route` | Route tasks to appropriate model tiers |
 
 ## Cross-Platform Support
 
