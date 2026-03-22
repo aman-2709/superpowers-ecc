@@ -262,6 +262,37 @@ Done!
 - Dispatch fix subagent with specific instructions
 - Don't try to fix manually (context pollution)
 
+## For Long-Running Tasks
+
+When a task requires exploring a large codebase where relevant files aren't known upfront, use **iterative retrieval** instead of single-shot subagent dispatch.
+
+See `iterative-retrieval.md` in this directory for the full pattern.
+
+### When to use iterative retrieval
+
+- The implementer would need to search/explore before it can implement
+- The controller can't predict which files are relevant
+- The task spans multiple subsystems with unknown interdependencies
+- Previous single-shot dispatches failed due to missing context
+
+### When to use single-shot dispatch (default)
+
+- All relevant files are known and can be provided in context
+- The task is focused on a single file or small set of files
+- The plan specifies exact file paths and line ranges
+- The controller has already read the relevant code
+
+### How it works with the two-stage review
+
+Iterative retrieval replaces only the **context gathering** step — it determines what context to provide to the implementer. The two-stage review loop (spec compliance → code quality) runs exactly the same after the implementer finishes.
+
+```
+Iterative retrieval (context gathering)
+  → Implementer subagent (with refined context)
+    → Spec reviewer (unchanged)
+      → Code quality reviewer (unchanged)
+```
+
 ## Integration
 
 **Required workflow skills:**
