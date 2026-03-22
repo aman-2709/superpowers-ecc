@@ -6,7 +6,7 @@ import { ROOT, parseFrontmatter } from './helpers.js';
 
 const SKILLS_DIR = join(ROOT, 'skills');
 
-const EXPECTED_SKILL_COUNT = 16;
+const EXPECTED_SKILL_COUNT = 17;
 
 describe('skills validation', () => {
   const entries = readdirSync(SKILLS_DIR, { withFileTypes: true });
