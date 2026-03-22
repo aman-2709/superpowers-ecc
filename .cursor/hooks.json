@@ -3,15 +3,15 @@
   "hooks": {
     "sessionStart": [
       {
-        "command": "node hooks/scripts/session-start.js"
+        "command": "bash -c 'node \"$(git rev-parse --show-toplevel)/hooks/scripts/session-start.js\"'"
       }
     ],
     "sessionEnd": [
       {
-        "command": "node hooks/scripts/session-end.js"
+        "command": "bash -c 'node \"$(git rev-parse --show-toplevel)/hooks/scripts/session-end.js\"'"
       },
       {
-        "command": "node hooks/scripts/suggest-compact.js"
+        "command": "bash -c 'node \"$(git rev-parse --show-toplevel)/hooks/scripts/suggest-compact.js\"'"
       }
     ]
   }
