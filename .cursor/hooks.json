@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node hooks/scripts/session-start.js"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "node hooks/scripts/session-end.js"
+      },
+      {
+        "command": "node hooks/scripts/suggest-compact.js"
+      }
+    ]
+  }
+}
