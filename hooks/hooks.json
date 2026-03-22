@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "SessionStart": [
+    "PreToolUse": [
       {
         "matcher": "",
         "hooks": [
@@ -35,7 +35,7 @@
         ]
       }
     ],
-    "PreCompact": [
+    "Notification": [
       {
         "matcher": "",
         "hooks": [

@@ -159,12 +159,12 @@ All state stored as JSON files in `~/.claude/superpowers-ecc/`. Directory tree a
 
 | Hook | Type | Script | Purpose |
 |---|---|---|---|
-| Session start | `SessionStart` | `session-start.js` | Load prior session state from JSON |
+| Session start | `PreToolUse` | `session-start.js` | Initialize store, create session on first tool use (idempotent) |
 | Session end | `Stop` | `session-end.js` | Persist current state to JSON |
-| Pre-compaction | `PreCompact` | `pre-compact.js` | Save state before context compaction |
+| Pre-compaction | `Notification` | `pre-compact.js` | Save state on notification events |
 | Compaction suggestion | `Stop` | `suggest-compact.js` | Suggest compaction at logical breakpoints |
 
-All hook event types are verified against Claude Code's hook API (22 supported types including `SessionStart`, `Stop`, `PreCompact`). All hook scripts use `state/store.js` for persistence. Platform-agnostic Node.js.
+Valid Claude Code plugin hook types: `PreToolUse`, `PostToolUse`, `Notification`, `Stop`. All hook scripts use `state/store.js` for persistence. Platform-agnostic Node.js.
 
 ---
 

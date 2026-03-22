@@ -21,10 +21,10 @@ describe('Session hooks', () => {
     assert.ok(parsed && typeof parsed === 'object', 'hooks.json should parse to an object');
   });
 
-  it('hooks.json contains entries for SessionStart, Stop, and PreCompact', () => {
+  it('hooks.json contains entries for PreToolUse, Stop, and Notification', () => {
     const config = JSON.parse(fs.readFileSync(HOOKS_JSON_PATH, 'utf-8'));
     assert.ok(config.hooks, 'hooks.json should have a top-level "hooks" key');
-    for (const eventType of ['SessionStart', 'Stop', 'PreCompact']) {
+    for (const eventType of ['PreToolUse', 'Stop', 'Notification']) {
       assert.ok(
         Array.isArray(config.hooks[eventType]),
         `hooks.json should have an array for event type "${eventType}"`
