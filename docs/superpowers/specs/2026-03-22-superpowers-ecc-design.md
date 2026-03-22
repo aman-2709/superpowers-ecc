@@ -9,7 +9,7 @@
 | Principle | Meaning |
 |---|---|
 | **Workflow-first** | superpowers' 7-step loop is the spine. Everything else serves it. |
-| **Curated, not comprehensive** | 130+ skills across both repos become 23 standalone + 1 embedded sub-technique. Quality over quantity. |
+| **Curated, not comprehensive** | 130+ skills across both repos become 24 standalone + 1 embedded sub-technique. Quality over quantity. |
 | **Security by default** | Security review + security-reviewer agent baked in, not optional. |
 | **Cross-platform** | Claude Code primary; Cursor + Codex CLI + OpenCode as first-class targets via superpowers' manifest pattern. |
 | **Memory that learns** | Sessions accumulate instincts via JSON-backed state. The agent gets smarter over time. |
@@ -17,7 +17,7 @@
 
 ---
 
-## Skill Inventory (23 standalone + 1 embedded sub-technique)
+## Skill Inventory (24 standalone + 1 embedded sub-technique)
 
 ### Superpowers Core Workflow (7)
 
@@ -27,7 +27,7 @@
 | 2 | `using-git-worktrees` | Isolated branch per task for parallel work and safe rollback |
 | 3 | `writing-plans` | Breaks work into 2-5 min tasks with exact file paths |
 | 4 | `subagent-driven-development` | Two-stage review (spec + code quality) execution engine. Contains `iterative-retrieval.md` as a sub-technique for long-running tasks |
-| 5 | `test-driven-development` | RED-GREEN-REFACTOR enforced. Merged: superpowers discipline + ECC coverage targets + anti-patterns |
+| 5 | `test-driven-development` | RED-GREEN-REFACTOR enforced. Phase 1 ports superpowers-only version verbatim; Phase 4.2 merges in ECC coverage targets + anti-patterns (final merged state) |
 | 6 | `requesting-code-review` | Pre-review checklist between tasks |
 | 7 | `finishing-a-development-branch` | Clean merge/PR/discard decision |
 
@@ -38,24 +38,25 @@
 | 8 | `systematic-debugging` | 4-phase root cause process |
 | 9 | `verification-before-completion` | Evidence before declaring success |
 | 10 | `executing-plans` | Batch execution with human checkpoints |
-| 11 | `dispatching-parallel-agents` | Concurrent subagent patterns |
+| 11 | `dispatching-parallel-agents` | Concurrent subagent patterns. Includes cascade method (fan-out, collect, synthesize) and scaling decision framework for when to parallelize vs. stay sequential |
 | 12 | `receiving-code-review` | How to respond to review feedback with technical rigor |
 | 13 | `writing-skills` | Meta-skill for creating new skills |
 | 14 | `using-superpowers-ecc` | Onboarding skill (rewritten from using-superpowers to cover two-layer agent architecture, JSON state system, and ECC additions) |
 
-### ECC Additions (9 standalone)
+### ECC Additions (10 standalone)
 
 | # | Skill | Purpose |
 |---|---|---|
 | 15 | `security-review` | OWASP checklist, works alongside TDD |
 | 16 | `continuous-learning-v2` | Instinct system with confidence scoring, backed by JSON state |
 | 17 | `search-first` | Research-before-coding, prevents hallucinated API usage |
-| 18 | `eval-harness` | Eval-driven development, pairs with verification-before-completion |
+| 18 | `eval-harness` | Eval-driven development, pairs with verification-before-completion. Covers grader types (LLM-as-judge, exact match, semantic similarity) and pass@k metrics |
 | 19 | `verification-loop` | Continuous verification: build, test, lint, typecheck |
 | 20 | `strategic-compact` | Token-aware compaction suggestions at logical breakpoints |
-| 21 | `api-design` | REST API patterns, pagination, error responses |
-| 22 | `deployment-patterns` | CI/CD, Docker, health checks, rollbacks |
-| 23 | `e2e-testing` | Playwright E2E patterns |
+| 21 | `token-optimization` | System prompt slimming, background processes, and model selection guidance. Complements strategic-compact (which covers compaction); this covers everything else in token budget management |
+| 22 | `api-design` | REST API patterns, pagination, error responses |
+| 23 | `deployment-patterns` | CI/CD, Docker, health checks, rollbacks |
+| 24 | `e2e-testing` | Playwright E2E patterns |
 
 ### Embedded Sub-Technique (1)
 
@@ -158,12 +159,12 @@ All state stored as JSON files in `~/.claude/superpowers-ecc/`. Directory tree a
 
 | Hook | Type | Script | Purpose |
 |---|---|---|---|
-| Session start | `UserPromptSubmit` | `session-start.js` | Load prior session state from JSON |
+| Session start | `SessionStart` | `session-start.js` | Load prior session state from JSON |
 | Session end | `Stop` | `session-end.js` | Persist current state to JSON |
 | Pre-compaction | `PreCompact` | `pre-compact.js` | Save state before context compaction |
 | Compaction suggestion | `Stop` | `suggest-compact.js` | Suggest compaction at logical breakpoints |
 
-All hook scripts use `state/store.js` for persistence. Platform-agnostic Node.js.
+All hook event types are verified against Claude Code's hook API (22 supported types including `SessionStart`, `Stop`, `PreCompact`). All hook scripts use `state/store.js` for persistence. Platform-agnostic Node.js.
 
 ---
 
@@ -224,7 +225,7 @@ superpowers-ecc/
 │   ├── plugin.json
 │   └── marketplace.json
 │
-├── skills/                                    # 23 standalone skills
+├── skills/                                    # 24 standalone skills
 │   ├── brainstorming/SKILL.md
 │   ├── using-git-worktrees/SKILL.md
 │   ├── writing-plans/SKILL.md
@@ -250,6 +251,7 @@ superpowers-ecc/
 │   ├── eval-harness/SKILL.md
 │   ├── verification-loop/SKILL.md
 │   ├── strategic-compact/SKILL.md
+│   ├── token-optimization/SKILL.md
 │   ├── api-design/SKILL.md
 │   ├── deployment-patterns/SKILL.md
 │   └── e2e-testing/SKILL.md
@@ -391,13 +393,13 @@ superpowers-ecc/
 
 | # | Task | Verification |
 |---|---|---|
-| 4.1 | Port `search-first`, `eval-harness`, `verification-loop`, `api-design`, `deployment-patterns`, `e2e-testing` from ECC | 6 new skills with valid frontmatter |
+| 4.1 | Port `search-first`, `eval-harness`, `verification-loop`, `token-optimization`, `api-design`, `deployment-patterns`, `e2e-testing` from ECC | 7 new skills with valid frontmatter |
 | 4.2 | Merge TDD skills: superpowers base + ECC coverage target + anti-patterns + verification-loop reference | Merged SKILL.md reviewed |
 | 4.3 | Merge planning: wire `/plan` command to `writing-plans` skill, document planner agent relationship | Command triggers correct skill |
 | 4.4 | Add `iterative-retrieval.md` as sub-technique doc in `subagent-driven-development/`, add "For Long-Running Tasks" section to SKILL.md | Referenced correctly in SKILL.md |
 | 4.5 | Add `mcp-configs/mcp-servers.json` | Valid JSON |
 
-**Exit gate:** All 23 skills in place, 3 merges complete, ~27 tests pass.
+**Exit gate:** All 24 skills in place, 3 merges complete, ~27 tests pass.
 
 ### Phase 5 — Polish & Launch
 
@@ -423,12 +425,13 @@ superpowers-ecc/
 | Decision | Choice | Rationale |
 |---|---|---|
 | Workflow backbone | superpowers 7-step loop | Coherent and proven. Don't dilute it. |
-| Skill count | 23 standalone + 1 sub-technique | superpowers' 14 + 9 ECC additions. No bloat. |
+| Skill count | 24 standalone + 1 sub-technique | superpowers' 14 + 10 ECC additions. No bloat. |
 | Language rules | TypeScript, Python, Go | Covers 80% of users. Others can add manually. |
 | Security tooling | security-review skill + security-reviewer agent | Non-negotiable in 2026. |
 | Memory system | ECC's continuous-learning-v2, backed by JSON | superpowers has nothing. Clear capability win. |
 | State persistence | JSON files in `~/.claude/superpowers-ecc/` | No SQLite dependency. Auto-create on first run. |
-| Token strategy | strategic-compact + model-route | Practical and cost-saving. |
+| Token strategy | strategic-compact + token-optimization + model-route | Compaction, budget management, and routing. |
+| Node.js requirement | `"engines": { "node": ">=18.0.0" }` in package.json | Required for fs.renameSync reliability and modern JS features. |
 | Agent architecture | Two layers: embedded subagent prompts (execution) + standalone agents (consultation) | Serve different purposes, documented clearly. |
 | Agents | 7 curated standalone | Enough for real delegation without overwhelming. |
 | Commands | 24 | Covers full workflow without duplication. |
