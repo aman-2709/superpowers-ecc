@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "node --test tests/*.test.js"
+    "test": "node tests/run-all.js"
   },
   "engines": {
     "node": ">=18.0.0"

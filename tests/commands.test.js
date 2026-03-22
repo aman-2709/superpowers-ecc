@@ -1,36 +1,12 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { ROOT, parseFrontmatter } from './helpers.js';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const COMMANDS_DIR = join(ROOT, 'commands');
 
 const EXPECTED_COMMAND_COUNT = 3;
-
-/**
- * Parse YAML frontmatter from a markdown file.
- * Returns an object with key-value pairs, or null if no frontmatter found.
- */
-function parseFrontmatter(content) {
-  if (!content.startsWith('---')) return null;
-
-  const endIndex = content.indexOf('\n---', 3);
-  if (endIndex === -1) return null;
-
-  const yaml = content.slice(4, endIndex);
-  const fields = {};
-
-  for (const line of yaml.split('\n')) {
-    const match = line.match(/^(\w[\w-]*):\s*(.+)/);
-    if (match) {
-      fields[match[1]] = match[2].trim();
-    }
-  }
-
-  return fields;
-}
 
 describe('commands validation', () => {
   const files = readdirSync(COMMANDS_DIR);
