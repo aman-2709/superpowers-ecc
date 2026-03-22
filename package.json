@@ -1,0 +1,11 @@
+{
+  "name": "superpowers-ecc",
+  "version": "0.1.0",
+  "description": "Focused Claude Code plugin merging superpowers workflow discipline with curated ECC tooling",
+  "author": "xl4",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

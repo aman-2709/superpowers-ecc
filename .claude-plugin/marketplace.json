@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "superpowers-ecc",
+  "description": "Disciplined workflow skills, security review, learning system, and cross-platform tooling",
+  "owner": {
+    "name": "xl4"
+  },
+  "plugins": [
+    {
+      "name": "superpowers-ecc",
+      "source": "./",
+      "description": "24 workflow skills, 7 agents, 24 commands — superpowers discipline + ECC tooling",
+      "version": "0.1.0",
+      "license": "MIT",
+      "keywords": ["skills", "tdd", "debugging", "security", "learning", "workflows"],
+      "category": "workflow"
+    }
+  ]
+}
