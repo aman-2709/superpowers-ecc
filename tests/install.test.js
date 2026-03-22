@@ -1,10 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { ROOT } from './helpers.js';
 
 describe('install validation', () => {
   it('plugin.json exists and has required fields', () => {
@@ -33,5 +31,13 @@ describe('install validation', () => {
     const marketplace = JSON.parse(raw);
 
     assert.equal(typeof marketplace, 'object', 'marketplace.json must parse to an object');
+  });
+
+  it('CLAUDE.md exists', () => {
+    assert.ok(existsSync(join(ROOT, 'CLAUDE.md')), 'CLAUDE.md must exist at the project root');
+  });
+
+  it('AGENTS.md exists', () => {
+    assert.ok(existsSync(join(ROOT, 'AGENTS.md')), 'AGENTS.md must exist at the project root');
   });
 });
