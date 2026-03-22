@@ -7,5 +7,6 @@
   },
   "license": "MIT",
   "keywords": ["skills", "tdd", "debugging", "security", "learning", "workflows"],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "commands": "./commands/"
 }
