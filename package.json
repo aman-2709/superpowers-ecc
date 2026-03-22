@@ -5,6 +5,9 @@
   "author": "xl4",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
   "engines": {
     "node": ">=18.0.0"
   }
