@@ -95,7 +95,7 @@ Embedded prompts are **execution machinery** — they run as part of the workflo
 | `/brainstorm` | superpowers | `brainstorming` skill |
 | `/write-plan` | superpowers | `writing-plans` skill |
 | `/execute-plan` | superpowers | `executing-plans` skill |
-| `/plan` | ECC | Alias for `writing-plans` skill |
+| `/plan` | ECC | Alias for `/write-plan` — identical behavior, shorter name for ECC users |
 | `/tdd` | ECC | `test-driven-development` skill |
 | `/code-review` | ECC | `requesting-code-review` skill |
 | `/build-fix` | ECC | `build-error-resolver` agent |
@@ -376,7 +376,7 @@ superpowers-ecc/
 |---|---|---|
 | 3.1 | Port `common/` rules from ECC | Rules lint clean |
 | 3.2 | Port `typescript/`, `python/`, `golang/` rules | Same |
-| 3.3 | Port 7 standalone agents (planner, architect, code-reviewer, security-reviewer, build-error-resolver, refactor-cleaner, e2e-runner) | Each agent has required sections |
+| 3.3 | Port 6 remaining standalone agents (planner, architect, code-reviewer, build-error-resolver, refactor-cleaner, e2e-runner). Note: security-reviewer already ported in Phase 2.3. | Each agent has required sections |
 | 3.4 | Port remaining commands: `/plan`, `/tdd`, `/code-review`, `/build-fix`, `/refactor-clean`, `/e2e`, `/checkpoint`, `/verify`, `/multi-plan`, `/multi-execute`, `/sessions`, `/quality-gate`, `/model-route`, `/test-coverage` | 24 total commands register |
 | 3.5 | Add Cursor support (`.cursor/hooks.json` pointing to shared hook scripts) | Manual: hooks fire in Cursor |
 | 3.6 | Add OpenCode support (`.opencode/plugins/superpowers-ecc.js`) | Manual: plugin loads in OpenCode |
