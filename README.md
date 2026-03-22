@@ -6,7 +6,7 @@ A focused Claude Code plugin merging superpowers workflow discipline with curate
 
 ```bash
 # Replace with your GitHub repo URL after publishing
-/plugin marketplace add https://github.com/YOUR-ORG/superpowers-ecc
+/plugin marketplace add https://github.com/aman-2709/superpowers-ecc
 /plugin install superpowers-ecc@superpowers-ecc
 ```
 
