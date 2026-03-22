@@ -6,7 +6,7 @@ import { ROOT, parseFrontmatter } from './helpers.js';
 
 const COMMANDS_DIR = join(ROOT, 'commands');
 
-const EXPECTED_COMMAND_COUNT = 10;
+const EXPECTED_COMMAND_COUNT = 24;
 
 describe('commands validation', () => {
   const files = readdirSync(COMMANDS_DIR);
