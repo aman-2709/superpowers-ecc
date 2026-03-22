@@ -180,3 +180,76 @@ From debugging session (2025-10-03):
 - All investigations completed concurrently
 - All fixes integrated successfully
 - Zero conflicts between agent changes
+
+## Cascade Method (Fan-Out → Collect → Synthesize)
+
+The cascade method is a structured three-phase approach for parallel investigation where the goal is a single coherent output assembled from multiple independent explorations.
+
+### Fan-Out
+
+Dispatch N agents with independent, focused scopes. Each agent gets a clear, narrow question or investigation area. The key constraint: agents must not need each other's results to do their work.
+
+Design each agent's prompt to:
+- Ask one specific question or investigate one specific area
+- Include all context the agent needs (no cross-referencing other agents)
+- Define a structured output format so results are easy to merge later
+
+### Collect
+
+Gather results from all agents. As results come in, actively note:
+- **Conflicts** — agents reached different conclusions about the same thing
+- **Overlaps** — multiple agents found the same evidence (reinforces confidence)
+- **Gaps** — areas none of the agents covered (may need a follow-up dispatch)
+
+### Synthesize
+
+Merge results into a single coherent output. Resolve conflicts by:
+- Weighing specificity — an agent that found the exact line of code beats one that found a general pattern
+- Weighing evidence depth — an agent with a reproduction case beats one with a hypothesis
+- Flagging unresolvable disagreements for human review rather than silently picking a winner
+
+### Cascade Example: Cross-Subsystem Bug Investigation
+
+**Scenario:** Users report intermittent 500 errors on checkout. The checkout flow touches three subsystems: payment processing, inventory reservation, and order creation.
+
+**Fan-Out:**
+```
+Agent 1 → "Investigate payment processing for sources of 500 errors during
+           checkout. Check error logs, exception handlers, and external API
+           call timeouts. Return: error patterns found, frequency, and
+           suspected root causes."
+
+Agent 2 → "Investigate inventory reservation for sources of 500 errors during
+           checkout. Check for race conditions in stock decrement, deadlocks,
+           and failed rollbacks. Return: error patterns found, frequency, and
+           suspected root causes."
+
+Agent 3 → "Investigate order creation for sources of 500 errors during
+           checkout. Check for validation failures, database constraint
+           violations, and transaction isolation issues. Return: error patterns
+           found, frequency, and suspected root causes."
+```
+
+**Collect:**
+- Agent 1: Found payment API timeouts at 3s, causing ~40% of 500s
+- Agent 2: Found deadlock on `inventory_locks` table under concurrent writes, causing ~35% of 500s
+- Agent 3: Found order creation fails when inventory reservation times out, causing ~25% of 500s — references "upstream timeout"
+
+**Synthesize:**
+- Agents 1 and 3 have an overlap: Agent 3's "upstream timeout" is Agent 1's payment API timeout cascading through the system
+- Agent 2 found an independent root cause (deadlock)
+- Root cause analysis: Two independent issues — (1) payment API timeout at 3s is too aggressive, cascading to order creation failures, and (2) inventory reservation has a deadlock under concurrent writes
+- Recommendation: Increase payment timeout to 10s with circuit breaker, and fix inventory locking strategy to use row-level locks instead of table-level locks
+
+## When to Parallelize vs. Stay Sequential
+
+| Signal | Approach | Why |
+|---|---|---|
+| Tasks share no files or state | Parallelize | No merge conflicts, no coordination needed |
+| Tasks read same files but don't write | Parallelize | Read-only access is safe to share |
+| Tasks write to same files | Sequential | Concurrent writes cause conflicts |
+| Task B depends on Task A's output | Sequential | Data dependency requires ordering |
+| Exploration/research with independent scopes | Parallelize | Investigation is inherently parallelizable |
+| Fewer than 3 tasks | Usually sequential | Dispatch overhead exceeds time savings |
+| Tasks require different expertise domains | Parallelize | Specialized agents perform better in isolation |
+| Tasks share complex state (database, external API) | Sequential | Shared mutable state is dangerous |
