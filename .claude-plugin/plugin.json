@@ -6,5 +6,6 @@
     "name": "xl4"
   },
   "license": "MIT",
-  "keywords": ["skills", "tdd", "debugging", "security", "learning", "workflows"]
+  "keywords": ["skills", "tdd", "debugging", "security", "learning", "workflows"],
+  "skills": "./skills/"
 }

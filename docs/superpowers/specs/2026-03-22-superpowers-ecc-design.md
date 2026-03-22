@@ -70,7 +70,7 @@
 
 | Layer | What | When dispatched | Examples |
 |---|---|---|---|
-| **Embedded subagent prompts** (superpowers) | Task-scoped prompts inside skills | Automatically by `subagent-driven-development` during plan execution | `implementer-prompt.md`, `spec-reviewer-prompt.md`, `quality-reviewer-prompt.md` |
+| **Embedded subagent prompts** (superpowers) | Task-scoped prompts inside skills | Automatically by `subagent-driven-development` during plan execution | `implementer-prompt.md`, `spec-reviewer-prompt.md`, `code-quality-reviewer-prompt.md` |
 | **Standalone agents** (ECC) | Domain-expert agents in `agents/` | On-demand via commands or user request | `planner.md`, `security-reviewer.md`, `build-error-resolver.md` |
 
 Embedded prompts are **execution machinery** — they run as part of the workflow loop with tightly scoped context curated by the controlling skill. Standalone agents are **consultants** — you call them when you need domain expertise outside the loop.
@@ -233,7 +233,7 @@ superpowers-ecc/
 │   │   ├── SKILL.md
 │   │   ├── implementer-prompt.md
 │   │   ├── spec-reviewer-prompt.md
-│   │   ├── quality-reviewer-prompt.md
+│   │   ├── code-quality-reviewer-prompt.md
 │   │   └── iterative-retrieval.md
 │   ├── test-driven-development/SKILL.md       # Merged
 │   ├── requesting-code-review/SKILL.md
