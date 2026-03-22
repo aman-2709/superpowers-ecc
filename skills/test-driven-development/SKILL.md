@@ -361,6 +361,91 @@ When adding mocks or test utilities, read @testing-anti-patterns.md to avoid com
 - Adding test-only methods to production classes
 - Mocking without understanding dependencies
 
+## Coverage Requirements
+
+Minimum **80%** coverage across lines, functions, and branches.
+
+| Code Category | Target | Rationale |
+|---|---|---|
+| Core business logic | 100% | Bugs here cost the most |
+| Authentication/authorization | 100% | Security-critical |
+| Financial calculations | 100% | Correctness is non-negotiable |
+| API endpoints | 90%+ | Public interface, high blast radius |
+| Utility functions | 80%+ | Baseline for all code |
+| Generated/config code | Exempt | Not worth testing boilerplate |
+
+**How to check:**
+
+```bash
+# Jest/Vitest
+npm run test -- --coverage
+
+# c8 (Node.js built-in)
+c8 --lines 80 --functions 80 --branches 80 node --test tests/*.test.js
+```
+
+Coverage below 80% blocks the GREEN phase. Add more tests before proceeding to REFACTOR.
+
+## Common Testing Mistakes
+
+Expanded from `testing-anti-patterns.md` — these are the mistakes that waste the most time:
+
+### Testing implementation, not behavior
+
+```typescript
+// WRONG — tests internal state
+expect(component.state.count).toBe(5)
+
+// RIGHT — tests what users see
+expect(screen.getByText('Count: 5')).toBeInTheDocument()
+```
+
+### Brittle selectors
+
+```typescript
+// WRONG — breaks on any CSS change
+await page.click('.css-class-xyz')
+
+// RIGHT — resilient to refactoring
+await page.click('button:has-text("Submit")')
+await page.click('[data-testid="submit-button"]')
+```
+
+### Tests that depend on each other
+
+```typescript
+// WRONG — test 2 assumes test 1 ran
+test('creates user', () => { /* creates user */ })
+test('updates same user', () => { /* depends on test 1 */ })
+
+// RIGHT — each test is independent
+test('creates user', () => {
+  const user = createTestUser()
+  // ...
+})
+test('updates user', () => {
+  const user = createTestUser()
+  // ...
+})
+```
+
+## Post-GREEN Verification
+
+After the GREEN phase (tests pass), run the full verification loop before REFACTOR:
+
+```
+GREEN (tests pass)
+  → Run build
+  → Run typecheck
+  → Run linter
+  → All pass? → Proceed to REFACTOR
+  → Any fail? → Fix before refactoring
+```
+
+Use the `superpowers-ecc:verification-loop` skill to automate this. The verification loop catches issues that tests alone don't cover: type errors, lint violations, and build failures.
+
+This step prevents the common mistake of refactoring code that doesn't build or has type errors — which makes the refactoring harder to reason about.
+
 ## Final Rule
 
 ```
