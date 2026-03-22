@@ -1,0 +1,8 @@
+node_modules/
+docs/superpowers/
+superpower-ecc-plan.md
+.claude/plugins/cache/
+.DS_Store
+Thumbs.db
+.env
+.env.local

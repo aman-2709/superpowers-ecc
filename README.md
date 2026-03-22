@@ -2,12 +2,22 @@
 
 A focused Claude Code plugin merging superpowers workflow discipline with curated ECC tooling.
 
+## Prerequisites
+
+- [Claude Code](https://claude.ai/download) v2.1.0+
+- Node.js 18+
+
 ## Quick Start
 
 ```bash
 /plugin marketplace add https://github.com/aman-2709/superpowers-ecc
 /plugin install superpowers-ecc@superpowers-ecc
+/reload-plugins
 ```
+
+### After Installing
+
+Start with `/superpowers-ecc:brainstorm` to kick off a new feature or project. The brainstorming skill guides you through spec refinement, then transitions to planning and implementation.
 
 ## What's Included
 
@@ -28,7 +38,7 @@ The plugin enforces a 7-step development loop:
 brainstorm -> worktree -> plan -> implement (subagent-driven) -> review -> verify -> merge
 ```
 
-Each step has a dedicated skill with guardrails. The `/plan` command wires together brainstorming, planning, and execution into a single coordinated flow.
+Each step has a dedicated skill with guardrails. Start with `/brainstorm` to enter the loop.
 
 ## Two-Layer Agent Architecture
 
@@ -63,7 +73,7 @@ The continuous learning system observes patterns across sessions and codifies th
 | `/brainstorm` | Structured ideation with spec document output |
 | `/write-plan` | Generate an implementation plan from a spec |
 | `/execute-plan` | Run a plan via subagent-driven implementation |
-| `/plan` | End-to-end: brainstorm, plan, and execute |
+| `/plan` | Alias for `/write-plan` — shorter name, same behavior |
 
 ### Quality
 
