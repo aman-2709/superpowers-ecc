@@ -5,7 +5,8 @@ A focused Claude Code plugin merging superpowers workflow discipline with curate
 ## Quick Start
 
 ```bash
-/plugin marketplace add <repo-url>
+# Replace with your GitHub repo URL after publishing
+/plugin marketplace add https://github.com/YOUR-ORG/superpowers-ecc
 /plugin install superpowers-ecc@superpowers-ecc
 ```
 
@@ -149,7 +150,7 @@ MCP server configurations are in `mcp-configs/mcp-servers.json`. Copy or merge i
 
 ## Credits
 
-Built on [superpowers](https://github.com/jessed/superpowers) by Jesse Vincent and [everything-claude-code](https://github.com/afmustafa/everything-claude-code) by Affaan Mustafa.
+Built on [superpowers](https://github.com/obra/superpowers) by Jesse Vincent and [everything-claude-code](https://github.com/affaan-m/everything-claude-code) by Affaan Mustafa.
 
 ## License
 
