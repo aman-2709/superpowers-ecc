@@ -22,6 +22,17 @@
             "timeout": 10000
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $CLAUDE_PLUGIN_ROOT/hooks/scripts/suggest-compact.js",
+            "async": true,
+            "timeout": 5000
+          }
+        ]
       }
     ],
     "PreCompact": [
